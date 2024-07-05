@@ -21,25 +21,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textSize="70sp">
+                android:textSize="150sp"
+                android:textColor="@color/black">
             </TextView>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_centerHorizontal="true">
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:background="@drawable/ripple_round_button"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="@string/plus"
+                    android:textSize="50sp"
+                    android:textColor="@color/black">
                 </Button>
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:background="@drawable/ripple_round_button"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="@string/minus"
+                    android:textSize="50sp"
+                    android:textColor="@color/black">
                 </Button>
 
             </LinearLayout>
@@ -56,25 +65,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textSize="70sp">
+                android:textSize="150sp"
+                android:textColor="@color/black">
             </TextView>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_centerHorizontal="true">
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:background="@drawable/ripple_round_button"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="@string/plus"
+                    android:textSize="50sp"
+                    android:textColor="@color/black">
                 </Button>
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:background="@drawable/ripple_round_button"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="@string/minus"
+                    android:textSize="50sp"
+                    android:textColor="@color/black">
                 </Button>
 
             </LinearLayout>

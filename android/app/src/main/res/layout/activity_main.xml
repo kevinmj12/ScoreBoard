@@ -34,6 +34,7 @@
                 android:layout_centerHorizontal="true">
 
                 <Button
+                    android:id="@+id/btn_red_plus_score"
                     android:background="@drawable/ripple_round_button"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -43,6 +44,7 @@
                 </Button>
 
                 <Button
+                    android:id="@+id/btn_red_minus_score"
                     android:background="@drawable/ripple_round_button"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -78,6 +80,7 @@
                 android:layout_centerHorizontal="true">
 
                 <Button
+                    android:id="@+id/btn_blue_plus_score"
                     android:background="@drawable/ripple_round_button"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -87,6 +90,7 @@
                 </Button>
 
                 <Button
+                    android:id="@+id/btn_blue_minus_score"
                     android:background="@drawable/ripple_round_button"
                     android:layout_width="100dp"
                     android:layout_height="100dp"

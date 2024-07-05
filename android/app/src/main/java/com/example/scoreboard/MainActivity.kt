@@ -2,26 +2,22 @@ package com.example.scoreboard
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.example.scoreboard.ui.theme.ScoreboardTheme
 
 class MainActivity : ComponentActivity() {
-
-    private val redScoreBoard = ScoreBoard()
-    private val blueScoreBoard = ScoreBoard()
+    private val redScoreboard = Scoreboard()
+    private val blueScoreboard = Scoreboard()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         // 화면 가로 모드 설정
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         // 화면 몰입 모드 설정
@@ -34,9 +30,34 @@ class MainActivity : ComponentActivity() {
 
         setContentView(R.layout.activity_main)
 
-        val redScore = findViewById<TextView>(R.id.score_red)
-        val blueScore = findViewById<TextView>(R.id.score_blue)
-        redScore.text = redScoreBoard.score.toString()
-        blueScore.text = blueScoreBoard.score.toString()
+        val redScoreTextView: TextView = findViewById(R.id.score_red)
+        val blueScoreTextView: TextView = findViewById(R.id.score_blue)
+        redScoreTextView.text = redScoreboard.score.toString()
+        blueScoreTextView.text = blueScoreboard.score.toString()
+
+        val redPlusButton: Button = findViewById(R.id.btn_red_plus_score)
+        val redMinusButton: Button = findViewById(R.id.btn_red_minus_score)
+        val bluePlusButton: Button = findViewById(R.id.btn_blue_plus_score)
+        val blueMinusButton: Button = findViewById(R.id.btn_blue_minus_score)
+
+        connectBtnScoreboard(redPlusButton, redScoreboard, redScoreTextView, true)
+        connectBtnScoreboard(redMinusButton, redScoreboard, redScoreTextView, false)
+        connectBtnScoreboard(bluePlusButton, blueScoreboard, blueScoreTextView, true)
+        connectBtnScoreboard(blueMinusButton, blueScoreboard, blueScoreTextView, false)
+    }
+}
+
+fun connectBtnScoreboard(button: Button, scoreboard: Scoreboard, textView: TextView, isPlus: Boolean){
+    if (isPlus){
+        button.setOnClickListener{
+            scoreboard.plusScore()
+            textView.text = scoreboard.score.toString()
+        }
+    }
+    else{
+        button.setOnClickListener{
+            scoreboard.minusScore()
+            textView.text = scoreboard.score.toString()
+        }
     }
 }

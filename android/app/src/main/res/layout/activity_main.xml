@@ -25,35 +25,17 @@
                 android:textColor="@color/black">
             </TextView>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textview_red_sets_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:layout_centerHorizontal="true">
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:text="1"
+                android:textSize="70sp"
+                android:textColor="@color/black">
+            </TextView>
 
-                <Button
-                    android:id="@+id/btn_red_plus_score"
-                    android:background="@drawable/ripple_round_button"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:text="@string/plus"
-                    android:textSize="50sp"
-                    android:textColor="@color/black">
-                </Button>
-
-                <Button
-                    android:id="@+id/btn_red_minus_score"
-                    android:background="@drawable/ripple_round_button"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:text="@string/minus"
-                    android:textSize="50sp"
-                    android:textColor="@color/black">
-                </Button>
-
-            </LinearLayout>
 
         </RelativeLayout>
 
@@ -71,35 +53,17 @@
                 android:textColor="@color/black">
             </TextView>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textview_blue_sets_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:layout_centerHorizontal="true">
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:text="0"
+                android:textSize="70sp"
+                android:textColor="@color/black">
+            </TextView>
 
-                <Button
-                    android:id="@+id/btn_blue_plus_score"
-                    android:background="@drawable/ripple_round_button"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:text="@string/plus"
-                    android:textSize="50sp"
-                    android:textColor="@color/black">
-                </Button>
-
-                <Button
-                    android:id="@+id/btn_blue_minus_score"
-                    android:background="@drawable/ripple_round_button"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:text="@string/minus"
-                    android:textSize="50sp"
-                    android:textColor="@color/black">
-                </Button>
-
-            </LinearLayout>
 
         </RelativeLayout>
 

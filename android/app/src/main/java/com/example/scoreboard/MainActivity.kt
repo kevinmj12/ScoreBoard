@@ -41,20 +41,17 @@ class MainActivity : ComponentActivity() {
 
         val redScoreTextView: TextView = findViewById(R.id.score_red)
         val blueScoreTextView: TextView = findViewById(R.id.score_blue)
+        val redSetsScoreTextView: TextView = findViewById(R.id.textview_red_sets_score)
+        val blueSetsScoreTextView: TextView = findViewById(R.id.textview_blue_sets_score)
         redScoreTextView.text = redScoreboard.score.toString()
         blueScoreTextView.text = blueScoreboard.score.toString()
-
-//        val redPlusButton: Button = findViewById(R.id.btn_red_plus_score)
-//        val redMinusButton: Button = findViewById(R.id.btn_red_minus_score)
-//        val bluePlusButton: Button = findViewById(R.id.btn_blue_plus_score)
-//        val blueMinusButton: Button = findViewById(R.id.btn_blue_minus_score)
-//
-//        connectBtnScoreboard(redPlusButton, redScoreboard, redScoreTextView, true)
-//        connectBtnScoreboard(redMinusButton, redScoreboard, redScoreTextView, false)
-//        connectBtnScoreboard(bluePlusButton, blueScoreboard, blueScoreTextView, true)
-//        connectBtnScoreboard(blueMinusButton, blueScoreboard, blueScoreTextView, false)
+        redSetsScoreTextView.text = redScoreboard.setsScore.toString()
+        blueSetsScoreTextView.text = blueScoreboard.setsScore.toString()
 
         connectTextViewScore(this, redScoreboard, redScoreTextView)
+        connectTextViewScore(this, blueScoreboard, blueScoreTextView)
+        connectTextViewSetsScore(this, redScoreboard, redSetsScoreTextView)
+        connectTextViewSetsScore(this, blueScoreboard, blueSetsScoreTextView)
     }
 }
 
@@ -73,7 +70,7 @@ fun connectTextViewScore(context: Context, scoreboard: Scoreboard, textView: Tex
         }
 
         val SWIPE_THRESHOLD = 50
-        val SWIPE_VELOCITY_THRESHOLD = 50
+        val SWIPE_VELOCITY_THRESHOLD = 30
 
         override fun onFling(
             e1: MotionEvent?,
@@ -86,14 +83,59 @@ fun connectTextViewScore(context: Context, scoreboard: Scoreboard, textView: Tex
                 if (Math.abs(diffY) > SWIPE_THRESHOLD &&
                     Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD){
                     if (diffY > 0){
-                        Log.d("log", "e2.x: " + e2.x.toString() + "/ e2.y: " + e2.y.toString())
-                        Log.d("log", "e1.x: " + e1.x.toString() + "/ e1.y: " + e1.y.toString())
                         scoreboard.minusScore()
                         textView.text = scoreboard.score.toString()
                     }
                     else{
                         scoreboard.plusScore()
                         textView.text = scoreboard.score.toString()
+                    }
+                }
+            }
+            return true
+        }
+    })
+
+    textView.setOnTouchListener { _, event ->
+        gestureDetector.onTouchEvent(event)
+        true
+    }
+}
+
+@SuppressLint("ClickableViewAccessibility")
+fun connectTextViewSetsScore(context: Context, scoreboard: Scoreboard, textView: TextView){
+    val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+        override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+            scoreboard.plusSetsScore()
+            textView.text = scoreboard.setsScore.toString()
+            return true
+        }
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            scoreboard.minusSetsScore()
+            textView.text = scoreboard.setsScore.toString()
+            return true
+        }
+
+        val SWIPE_THRESHOLD = 30
+        val SWIPE_VELOCITY_THRESHOLD = 30
+
+        override fun onFling(
+            e1: MotionEvent?,
+            e2: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            if (e1 != null){
+                val diffY = e2.y - e1.y
+                if (Math.abs(diffY) > SWIPE_THRESHOLD &&
+                    Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD){
+                    if (diffY > 0){
+                        scoreboard.minusSetsScore()
+                        textView.text = scoreboard.setsScore.toString()
+                    }
+                    else{
+                        scoreboard.plusSetsScore()
+                        textView.text = scoreboard.setsScore.toString()
                     }
                 }
             }

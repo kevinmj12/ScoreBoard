@@ -1,7 +1,16 @@
 package com.example.scoreboard
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.ActivityInfo
+import android.gesture.Gesture
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.View.OnClickListener
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
@@ -32,32 +41,110 @@ class MainActivity : ComponentActivity() {
 
         val redScoreTextView: TextView = findViewById(R.id.score_red)
         val blueScoreTextView: TextView = findViewById(R.id.score_blue)
+        val redSetsScoreTextView: TextView = findViewById(R.id.textview_red_sets_score)
+        val blueSetsScoreTextView: TextView = findViewById(R.id.textview_blue_sets_score)
         redScoreTextView.text = redScoreboard.score.toString()
         blueScoreTextView.text = blueScoreboard.score.toString()
+        redSetsScoreTextView.text = redScoreboard.setsScore.toString()
+        blueSetsScoreTextView.text = blueScoreboard.setsScore.toString()
 
-        val redPlusButton: Button = findViewById(R.id.btn_red_plus_score)
-        val redMinusButton: Button = findViewById(R.id.btn_red_minus_score)
-        val bluePlusButton: Button = findViewById(R.id.btn_blue_plus_score)
-        val blueMinusButton: Button = findViewById(R.id.btn_blue_minus_score)
-
-        connectBtnScoreboard(redPlusButton, redScoreboard, redScoreTextView, true)
-        connectBtnScoreboard(redMinusButton, redScoreboard, redScoreTextView, false)
-        connectBtnScoreboard(bluePlusButton, blueScoreboard, blueScoreTextView, true)
-        connectBtnScoreboard(blueMinusButton, blueScoreboard, blueScoreTextView, false)
+        connectTextViewScore(this, redScoreboard, redScoreTextView)
+        connectTextViewScore(this, blueScoreboard, blueScoreTextView)
+        connectTextViewSetsScore(this, redScoreboard, redSetsScoreTextView)
+        connectTextViewSetsScore(this, blueScoreboard, blueSetsScoreTextView)
     }
 }
 
-fun connectBtnScoreboard(button: Button, scoreboard: Scoreboard, textView: TextView, isPlus: Boolean){
-    if (isPlus){
-        button.setOnClickListener{
+@SuppressLint("ClickableViewAccessibility")
+fun connectTextViewScore(context: Context, scoreboard: Scoreboard, textView: TextView){
+    val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+        override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
             scoreboard.plusScore()
             textView.text = scoreboard.score.toString()
+            return true
         }
-    }
-    else{
-        button.setOnClickListener{
+        override fun onDoubleTap(e: MotionEvent): Boolean {
             scoreboard.minusScore()
             textView.text = scoreboard.score.toString()
+            return true
         }
+
+        val SWIPE_THRESHOLD = 50
+        val SWIPE_VELOCITY_THRESHOLD = 30
+
+        override fun onFling(
+            e1: MotionEvent?,
+            e2: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            if (e1 != null){
+                val diffY = e2.y - e1.y
+                if (Math.abs(diffY) > SWIPE_THRESHOLD &&
+                    Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD){
+                    if (diffY > 0){
+                        scoreboard.minusScore()
+                        textView.text = scoreboard.score.toString()
+                    }
+                    else{
+                        scoreboard.plusScore()
+                        textView.text = scoreboard.score.toString()
+                    }
+                }
+            }
+            return true
+        }
+    })
+
+    textView.setOnTouchListener { _, event ->
+        gestureDetector.onTouchEvent(event)
+        true
+    }
+}
+
+@SuppressLint("ClickableViewAccessibility")
+fun connectTextViewSetsScore(context: Context, scoreboard: Scoreboard, textView: TextView){
+    val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+        override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+            scoreboard.plusSetsScore()
+            textView.text = scoreboard.setsScore.toString()
+            return true
+        }
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            scoreboard.minusSetsScore()
+            textView.text = scoreboard.setsScore.toString()
+            return true
+        }
+
+        val SWIPE_THRESHOLD = 30
+        val SWIPE_VELOCITY_THRESHOLD = 30
+
+        override fun onFling(
+            e1: MotionEvent?,
+            e2: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            if (e1 != null){
+                val diffY = e2.y - e1.y
+                if (Math.abs(diffY) > SWIPE_THRESHOLD &&
+                    Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD){
+                    if (diffY > 0){
+                        scoreboard.minusSetsScore()
+                        textView.text = scoreboard.setsScore.toString()
+                    }
+                    else{
+                        scoreboard.plusSetsScore()
+                        textView.text = scoreboard.setsScore.toString()
+                    }
+                }
+            }
+            return true
+        }
+    })
+
+    textView.setOnTouchListener { _, event ->
+        gestureDetector.onTouchEvent(event)
+        true
     }
 }
